@@ -1,34 +1,57 @@
-from llama_index.core import VectorStoreIndex
+import os
+from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from ingestion import load_documents
 
+# Speicherort für Index
+PERSIST_DIR = "storage"
+
+# 🔥 GLOBALS (werden nur einmal beim Start geladen)
+llm = Ollama(
+    model="mistral",
+    request_timeout=120.0
+)
+
+embed_model = HuggingFaceEmbedding(
+    model_name="all-MiniLM-L6-v2"
+)
+
 
 def build_index():
-    print("Lade Dokumente...")
-    docs = load_documents()
+    # ✅ Wenn Index existiert → laden
+    if os.path.exists(PERSIST_DIR):
+        print("Lade bestehenden Index ⚡")
 
-    print(f"{len(docs)} Dokumente gefunden")
+        storage_context = StorageContext.from_defaults(
+            persist_dir=PERSIST_DIR
+        )
 
-    # Lokales Embedding Modell (für Vektoren)
-    embed_model = HuggingFaceEmbedding(
-        model_name="all-MiniLM-L6-v2"
-    )
+        index = load_index_from_storage(
+            storage_context,
+            embed_model=embed_model
+        )
 
-    # Lokales LLM über Ollama
-    llm = Ollama(
-        model="mistral",
-        request_timeout=120.0  # verhindert Timeout
-    )
+    # ✅ sonst neu bauen
+    else:
+        print("Baue neuen Index (first run) ⏳")
 
-    print("Erstelle Index...")
+        docs = load_documents()
 
-    index = VectorStoreIndex.from_documents(
-        docs,
-        embed_model=embed_model,
-    )
+        print(f"{len(docs)} Dokumente gefunden")
 
-    print("Index fertig ✅")
+        index = VectorStoreIndex.from_documents(
+            docs,
+            embed_model=embed_model,
+        )
+
+        print("Speichere Index...")
+
+        index.storage_context.persist(
+            persist_dir=PERSIST_DIR
+        )
+
+        print("Index gespeichert ✅")
 
     return index, llm
 
