@@ -4,10 +4,9 @@ from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from ingestion import load_documents
 
-# Speicherort für Index
 PERSIST_DIR = "storage"
 
-# 🔥 GLOBALS (werden nur einmal beim Start geladen)
+# ✅ GLOBAL (nur einmal geladen)
 llm = Ollama(
     model="mistral",
     request_timeout=120.0
@@ -19,7 +18,6 @@ embed_model = HuggingFaceEmbedding(
 
 
 def build_index():
-    # ✅ Wenn Index existiert → laden
     if os.path.exists(PERSIST_DIR):
         print("Lade bestehenden Index ⚡")
 
@@ -32,13 +30,10 @@ def build_index():
             embed_model=embed_model
         )
 
-    # ✅ sonst neu bauen
     else:
         print("Baue neuen Index (first run) ⏳")
 
         docs = load_documents()
-
-        print(f"{len(docs)} Dokumente gefunden")
 
         index = VectorStoreIndex.from_documents(
             docs,
@@ -46,11 +41,7 @@ def build_index():
         )
 
         print("Speichere Index...")
-
-        index.storage_context.persist(
-            persist_dir=PERSIST_DIR
-        )
-
+        index.storage_context.persist(persist_dir=PERSIST_DIR)
         print("Index gespeichert ✅")
 
     return index, llm
@@ -63,17 +54,18 @@ def query(index, llm, question):
         similarity_top_k=2
     )
 
+    # 🔥 BESSERER PROMPT (natürliches Deutsch)
     prompt = f"""
-Du bist ein intelligenter Studienassistent.
+Du bist ein hilfreicher und verständlicher Assistent.
 
 Beantworte die Frage NUR anhand des Dokuments.
 
 WICHTIG:
-- Antworte auf Deutsch
-- Gib konkrete Inhalte wieder
-- Erkläre kurz die Inhalte
+- Schreibe natürliches, einfaches Deutsch
+- Erkläre die Inhalte klar und verständlich
 - Nutze Stichpunkte
-- Keine allgemeinen Aussagen
+- Schreibe kurz und präzise
+- NICHT wie ein Fachbuch oder Wikipedia
 
 Frage:
 {question}
