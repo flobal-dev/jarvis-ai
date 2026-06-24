@@ -7,91 +7,97 @@
 
 ## ✨ Features
 
-- 📄 Chat with your own PDF documents  
+- 📄 Chat mit eigenen PDF-Dokumenten  
 - 🧠 Retrieval-Augmented Generation (RAG)  
-- 🤖 Fully local LLM (Mistral via Ollama)  
-- 🔒 100% offline – no API keys needed  
-- ⚡ Semantic search using embeddings  
+- 🤖 Lokales LLM (Mistral via Ollama)  
+- 🔒 100% offline – keine API Keys nötig  
+- ⚡ Persistenter Index für schnelle Startzeit  
+- 🖥️ Web UI mit Streamlit  
 
 ---
 
 ## 🎯 Demo
 
-```
-Du: Erkläre die wichtigsten Inhalte
-Jarvis:
-- Machine Learning beschreibt, wie Systeme aus Daten lernen
-- Neural Networks bestehen aus mehreren Schichten von Neuronen
-- Data Science umfasst Analyse und Interpretation von Daten
-```
+Frage: Welche Themen werden im Dokument behandelt?
+
+Antwort:
+- Machine Learning
+- Neuronale Netze
+- Data Science Workflow
 
 ---
 
 ## 🧱 Tech Stack
 
-- Python  
-- LlamaIndex  
-- Ollama (Mistral)  
-- FAISS (vector database)  
-- HuggingFace embeddings  
-- PyMuPDF (PDF parsing)  
+- Python
+- LlamaIndex
+- Ollama (Mistral)
+- HuggingFace Embeddings
+- FAISS
+- PyMuPDF
+- Streamlit
 
 ---
 
-## 📂 Project Structure
+## 📂 Projektstruktur
 
 jarvis-ai/
 │
 ├── src/
+│   ├── app.py
 │   ├── ingestion.py
-│   ├── rag.py
-│   └── main.py
+│   └── rag.py
 │
-├── data/           # your PDFs (ignored in Git)
 ├── README.md
+├── requirements.txt
 └── .gitignore
 
 ---
 
 ## ⚙️ Setup
 
-### Clone & Setup
+### 1. Repository klonen
 
 python -m venv venv
 venv\Scripts\activate
 
-pip install llama-index
-pip install llama-index-llms-ollama
-pip install llama-index-embeddings-huggingface
-pip install llama-index-readers-file
-pip install pymupdf pypdf faiss-cpu python-dotenv
+pip install -r requirements.txt
 
 ---
 
-### Start local model
+### 2. Ollama starten
 
 ollama run mistral
 
 ---
 
-## ▶️ Run
+## 📄 Dokumente hinzufügen
 
-python src/main.py
+/data
+
+Füge hier deine PDF-Dateien ein.
 
 ---
 
-## 🧠 How it works
+## ▶️ Anwendung starten
 
-PDF → Text extraction → Embeddings → Vector Search → LLM → Answer
+streamlit run src/app.py
+
+---
+
+## 🧠 Funktionsweise
+
+PDF → Text → Embeddings → Vector Search → LLM → Antwort
 
 ---
 
 ## 🚀 Roadmap
 
-- Voice interface  
-- Memory  
-- Web UI  
-- Raspberry Pi integration  
+- Chat UI
+- PDF Upload
+- Voice Interface
+- Memory System
+- Raspberry Pi
 
 ---
 
