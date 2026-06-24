@@ -1,16 +1,29 @@
-# Jarvis AI 🧠
+# 🧠 Jarvis AI
 
-Local AI assistant powered by Retrieval-Augmented Generation (RAG) to query and understand personal documents.
+> Local AI assistant powered by Retrieval-Augmented Generation (RAG)  
+> Query and understand your personal documents — fully offline.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
 - 📄 Chat with your own PDF documents  
 - 🧠 Retrieval-Augmented Generation (RAG)  
-- 🤖 Fully local LLM using **Mistral (via Ollama)**  
-- 🔒 Runs completely offline (no API keys required)  
+- 🤖 Fully local LLM (Mistral via Ollama)  
+- 🔒 100% offline – no API keys needed  
 - ⚡ Semantic search using embeddings  
+
+---
+
+## 🎯 Demo
+
+```
+Du: Erkläre die wichtigsten Inhalte
+Jarvis:
+- Machine Learning beschreibt, wie Systeme aus Daten lernen
+- Neural Networks bestehen aus mehreren Schichten von Neuronen
+- Data Science umfasst Analyse und Interpretation von Daten
+```
 
 ---
 
@@ -21,7 +34,7 @@ Local AI assistant powered by Retrieval-Augmented Generation (RAG) to query and 
 - Ollama (Mistral)  
 - FAISS (vector database)  
 - HuggingFace embeddings  
-- PyMuPDF (robust PDF parsing)  
+- PyMuPDF (PDF parsing)  
 
 ---
 
@@ -34,80 +47,51 @@ jarvis-ai/
 │   ├── rag.py
 │   └── main.py
 │
-├── data/             # your PDFs (not tracked by git)
+├── data/           # your PDFs (ignored in Git)
 ├── README.md
-├── requirements.txt
 └── .gitignore
+
 ---
 
 ## ⚙️ Setup
 
-### 1. Clone repository
-git clone https://github.com/flobal-dev/jarvis-ai.git
-cd jarvis-ai
----
+### Clone & Setup
 
-### 2. Create virtual environment
 python -m venv venv
 venv\Scripts\activate
----
 
-### 3. Install dependencies
 pip install llama-index
 pip install llama-index-llms-ollama
 pip install llama-index-embeddings-huggingface
 pip install llama-index-readers-file
 pip install pymupdf pypdf faiss-cpu python-dotenv
+
 ---
 
-### 4. Install Ollama
+### Start local model
 
-Download and install:
-
-👉 https://ollama.com
-
-Run:
 ollama run mistral
----
-
-## 📄 Add your documents
-
-Create a folder:
-/data
-Add your PDF files there.
 
 ---
 
-## ▶️ Run the project
+## ▶️ Run
+
 python src/main.py
----
 
-## 💬 Example
-Du: Erkläre die wichtigsten Inhalte
-Jarvis:
-
--Machine Learning beschreibt, wie Systeme aus Daten lernen
--Neural Networks bestehen aus mehreren Schichten von Neuronen
--Data Science umfasst Datenanalyse und Interpretation
 ---
 
 ## 🧠 How it works
 
-1. PDFs are parsed using PyMuPDF  
-2. Text is split into chunks  
-3. Embeddings are generated  
-4. Relevant chunks are retrieved  
-5. Local LLM (Mistral) generates the answer  
+PDF → Text extraction → Embeddings → Vector Search → LLM → Answer
 
 ---
 
-## 🚀 Future Improvements
+## 🚀 Roadmap
 
-- 🎤 Voice interface ("Hey Jarvis")  
-- ⚡ Faster retrieval (persisted index)  
-- 🧠 Memory support  
-- 🌐 Web UI (Streamlit)  
-- 🍓 Raspberry Pi integration  
+- Voice interface  
+- Memory  
+- Web UI  
+- Raspberry Pi integration  
 
 ---
 
