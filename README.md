@@ -6,21 +6,22 @@ Local AI assistant powered by Retrieval-Augmented Generation (RAG) to query and 
 
 ## 🚀 Features
 
-- 📄 Chat with your own PDF documents
-- 🧠 RAG (Retrieval-Augmented Generation)
-- 🤖 Fully local LLM using **Mistral (via Ollama)**
-- 🔒 No API keys required (runs completely offline)
-- ⚡ Fast semantic search using embeddings
+- 📄 Chat with your own PDF documents  
+- 🧠 Retrieval-Augmented Generation (RAG)  
+- 🤖 Fully local LLM using **Mistral (via Ollama)**  
+- 🔒 Runs completely offline (no API keys required)  
+- ⚡ Semantic search using embeddings  
 
 ---
 
 ## 🧱 Tech Stack
 
-- Python
-- LlamaIndex
-- Ollama (Mistral)
-- FAISS (vector database)
-- HuggingFace embeddings
+- Python  
+- LlamaIndex  
+- Ollama (Mistral)  
+- FAISS (vector database)  
+- HuggingFace embeddings  
+- PyMuPDF (robust PDF parsing)  
 
 ---
 
@@ -28,7 +29,7 @@ Local AI assistant powered by Retrieval-Augmented Generation (RAG) to query and 
 
 jarvis-ai/
 │
-├── src/              # main code
+├── src/
 │   ├── ingestion.py
 │   ├── rag.py
 │   └── main.py
@@ -52,27 +53,28 @@ venv\Scripts\activate
 ---
 
 ### 3. Install dependencies
-pip install llama-index python-dotenv pypdf faiss-cpu
-pip install llama-index-llms-ollama llama-index-embeddings-huggingface
+pip install llama-index
+pip install llama-index-llms-ollama
+pip install llama-index-embeddings-huggingface
+pip install llama-index-readers-file
+pip install pymupdf pypdf faiss-cpu python-dotenv
 ---
 
 ### 4. Install Ollama
 
-Download from:
+Download and install:
 
 👉 https://ollama.com
 
-Then run:
+Run:
 ollama run mistral
-(This downloads and starts the local model)
-
 ---
 
 ## 📄 Add your documents
 
 Create a folder:
 /data
-Add your own PDF files there.
+Add your PDF files there.
 
 ---
 
@@ -81,25 +83,31 @@ python src/main.py
 ---
 
 ## 💬 Example
-You: What is the document about?
-Jarvis: ...
+Du: Erkläre die wichtigsten Inhalte
+Jarvis:
+
+-Machine Learning beschreibt, wie Systeme aus Daten lernen
+-Neural Networks bestehen aus mehreren Schichten von Neuronen
+-Data Science umfasst Datenanalyse und Interpretation
 ---
 
 ## 🧠 How it works
 
-1. PDFs are loaded and split into chunks  
-2. Text is converted into embeddings  
-3. Relevant chunks are retrieved  
-4. Local LLM (Mistral) generates the answer  
+1. PDFs are parsed using PyMuPDF  
+2. Text is split into chunks  
+3. Embeddings are generated  
+4. Relevant chunks are retrieved  
+5. Local LLM (Mistral) generates the answer  
 
 ---
 
 ## 🚀 Future Improvements
 
-- 🎤 Voice interface (Jarvis-style assistant)
-- 🧠 Memory system
-- 🌐 Web UI (Streamlit)
-- 🍓 Raspberry Pi integration
+- 🎤 Voice interface ("Hey Jarvis")  
+- ⚡ Faster retrieval (persisted index)  
+- 🧠 Memory support  
+- 🌐 Web UI (Streamlit)  
+- 🍓 Raspberry Pi integration  
 
 ---
 
